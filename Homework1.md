@@ -131,5 +131,46 @@ bool hasCycle(ListNode *head, int* length) {
     }
     return false;
 }
-'''
+```
   
+## Merge Two Sorted Lists
+
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+```C++
+
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode* buffer1 = l1;
+        ListNode* buffer2 = l2;
+        ListNode* buffer = l1;
+        ListNode* returningNode;
+        if (buffer1 && buffer2) {
+            if (buffer1->val <= buffer2->val) {
+                 returningNode = buffer1;
+            }
+            else {
+                returningNode = buffer2; //for second while cycle
+                buffer2 = buffer1;
+                buffer1 = returningNode;
+            }
+            do {
+                while (buffer1->next != NULL && buffer1->next->val <= buffer2->val) {
+                        buffer1 = buffer1->next;
+                }
+                buffer = buffer1->next;
+                buffer1->next = buffer2;
+                buffer1 = buffer2;
+                buffer2 = buffer;
+            } while (buffer);
+
+            return returningNode;
+        }
+        else {
+            if (buffer1)
+                return buffer1;
+            else
+                return buffer2;
+        }
+
+  }
+```
