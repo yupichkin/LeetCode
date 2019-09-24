@@ -2,8 +2,7 @@
 
 C++ struct for singly linked list
 
-```
-С++
+```С++
 struct ListNode {
     int val;
     ListNode *next;
