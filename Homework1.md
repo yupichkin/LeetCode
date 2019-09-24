@@ -1,6 +1,16 @@
-#143. Reorder List
+#Linked list 
+C++ struct for singly linked list
+     ```
+    struct ListNode {
+        int val;
+        ListNode *next;
+        ListNode(int x) : val(x), next(NULL) {}
+    }; ```
 
-ListNode* middleNode(ListNode* head) {
+##Reorder list
+uses reverseList
+
+ ```ListNode* middleNode(ListNode* head) {
     ListNode* bufMiddle = head;
     ListNode* buf = head;
     if (head) {
@@ -66,3 +76,4 @@ ListNode* middleNode(ListNode* head) {
         splitTwoLists(head, middle);
     }
   }
+ ```
