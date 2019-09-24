@@ -3,6 +3,7 @@
 C++ struct for singly linked list
 
 ```
+С++
 struct ListNode {
     int val;
     ListNode *next;
