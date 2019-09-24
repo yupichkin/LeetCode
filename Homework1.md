@@ -1,6 +1,6 @@
-# Lists (homework 1)
+# Linked list 
 
-Definition for singly-linked list:
+Linked list struct in C++
 
 ```C++ 
 struct ListNode {
@@ -9,6 +9,7 @@ struct ListNode {
      ListNode(int x) : val(x), next(NULL) {}  
  };
  ```
+ 
 ## Reorder list
 uses reverseList
 ```
