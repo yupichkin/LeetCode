@@ -11,8 +11,8 @@ struct ListNode {
  ```
  
 ## Reorder list
-uses reverseList
-```
+uses reverseList and middleNode functions
+```C++
 ListNode* middleNode(ListNode* head) {
    ListNode* bufMiddle = head;
    ListNode* buf = head;
@@ -80,3 +80,56 @@ ListNode* middleNode(ListNode* head) {
    }
  }
 ```
+
+## Linked List Cycle II
+
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+```C++
+ListNode *detectCycle(ListNode *head) {
+    int length;
+    int i;
+    if(hasCycle(head, &length)) {
+        ListNode* buffer = head;
+        ListNode* buffer2 = head->next;
+        do {
+            i = 0;
+            do {
+                if (buffer == buffer2)
+                    return buffer;
+                buffer2 = buffer2->next;
+                i++;
+            } while (i <= length);
+            buffer = buffer->next;
+        }   while (buffer);
+    }
+    return NULL;
+        
+}
+
+bool hasCycle(ListNode *head, int* length) {
+    if (head){
+        ListNode* buffer = head->next;
+        int i = 0;
+        if (head->next) {
+            head = head->next->next; //for the first move
+
+            while (head && head->next) {
+                if (buffer == head) {
+                    do {
+                        buffer = buffer->next;
+                        i++;
+                    } while (buffer != head);
+                    
+                    *length = i;
+                    return true;
+                }
+                buffer = buffer->next;
+                head = head->next->next;
+            }
+        }
+    }
+    return false;
+}
+'''
+  
