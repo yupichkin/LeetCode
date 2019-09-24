@@ -1,4 +1,4 @@
-#Linked list 
+# Linked list 
 C++ struct for singly linked list
      ```
     struct ListNode {
@@ -7,7 +7,7 @@ C++ struct for singly linked list
         ListNode(int x) : val(x), next(NULL) {}
     }; ```
 
-##Reorder list
+## Reorder list
 uses reverseList
 
  ```ListNode* middleNode(ListNode* head) {
