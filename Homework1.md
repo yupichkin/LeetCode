@@ -5,8 +5,8 @@ C++ struct for singly linked list
         int val;
         ListNode *next;
         ListNode(int x) : val(x), next(NULL) {}
-    }; ```
-
+    }; 
+     ```
 ## Reorder list
 uses reverseList
 
