@@ -326,7 +326,7 @@ recursively:
         return head;
     }
     ListNode* reverseNode(ListNode* reversiveNode, ListNode* prev) {
-        if (reversiveNode && reversiveNode->next) {
+        if (reversiveNode->next) {
           ListNode* buffer = reversiveNode->next;
           reversiveNode->next = prev;
           return reverseNode(buffer, reversiveNode);
