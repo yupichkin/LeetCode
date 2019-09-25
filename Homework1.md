@@ -295,6 +295,7 @@ bool isPalindrome(ListNode* head) {
 
 Reverse a singly linked list.
 
+itteratively:
 ```C++
 ListNode* reverseList(ListNode* head) {
         if (head){
@@ -314,7 +315,24 @@ ListNode* reverseList(ListNode* head) {
     
     }
 ```
-
+recursively: 
+    ListNode* reverseList(ListNode* head) {
+        if (head && head->next) {
+          ListNode* buffer = head->next;
+          head->next = NULL;
+          return reverseNode(buffer, head);
+        }
+        return head;
+    }
+    ListNode* reverseNode(ListNode* reversiveNode, ListNode* prev) {
+        if (reversiveNode && reversiveNode->next) {
+          ListNode* buffer = reversiveNode->next;
+          reversiveNode->next = prev;
+          return reverseNode(buffer, reversiveNode);
+        }
+      reversiveNode->next = prev;
+      return reversiveNode;
+    }
 ## Remove Linked List Elements
 
 Remove all elements from a linked list of integers that have value val.
