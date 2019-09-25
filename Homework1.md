@@ -316,6 +316,7 @@ ListNode* reverseList(ListNode* head) {
     }
 ```
 recursively: 
+```C++
     ListNode* reverseList(ListNode* head) {
         if (head && head->next) {
           ListNode* buffer = head->next;
@@ -333,6 +334,7 @@ recursively:
       reversiveNode->next = prev;
       return reversiveNode;
     }
+```
 ## Remove Linked List Elements
 
 Remove all elements from a linked list of integers that have value val.
