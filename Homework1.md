@@ -255,39 +255,48 @@ Given a singly linked list, determine if it is a palindrome.
 
 ```C++
 bool isPalindrome(ListNode* head) {
-    ListNode* middle = head;
-    ListNode* end = head;
-    ListNode* buffer1 = head;
-    ListNode* buffer2;
-    ListNode* after;
-    ListNode* before;
-    if(head && head->next) {
-        while (end->next && end->next->next) {
-          middle = middle->next;
-          end = end->next->next;
-        }
-
+    if (head && head->next) {
+      ListNode* buffer = middleNode(head);
+      ListNode* middle = buffer->next;
+      buffer->next = NULL;
+      middle = reverseList(middle);
+      while (middle && head) {
+        if (middle->val != head->val)
+          return false;
         middle = middle->next;
-        buffer2 = middle;
-        after = middle->next;
-        middle->next = NULL;
-        while (after) {
-          before = middle;
-          middle = after;
-          after = middle->next;
-          middle->next = before;
-        }
-        while (middle) {
-          if (head->val != middle->val)
-            return false;
-          head = head->next;
-          middle = middle->next;
-        }
-        head = buffer1;
-        middle = buffer2;
-
+        head = head->next;
+      }
     }
     return true;
+  }
+  ListNode* reverseList(ListNode* head) {
+    if (head) {
+      ListNode* after = head->next;
+      ListNode* buf = head->next;
+      head->next = NULL;
+
+      while (after) {
+        buf = after->next;
+        after->next = head;
+        head = after;
+        after = buf;
+      }
+      return head;
+    }
+    return head;
+
+  }
+  ListNode* middleNode(ListNode* head) {
+    ListNode* bufMiddle = head;
+    ListNode* buf = head;
+    if (head) {
+      while (head->next && head->next->next) {
+        head = head->next->next;
+        bufMiddle = bufMiddle->next;
+      }
+      return bufMiddle;
+    }
+    return NULL;
   }
 ```
 
@@ -379,36 +388,32 @@ ListNode* removeElements(ListNode* head, int val) {
 Given a linked list, remove the n-th node from the end of list and return its head.
 
 ```C++
-ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int i = 0;
-        ListNode* listA = headA;
-        ListNode* listB = headB;
-        while (listA) {
-            listA = listA->next;
-            i++;
-        }
-        while (listB) {
-            listB = listB->next;
-            i--;
-        }
-        listA = headA;
-        listB = headB;
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        int i = getLength(headA) - getLength(headB);
         while (i > 0) {
-            listA = listA->next;
+            headA = headA->next;
             i--;
         }
         while (i < 0) {
-            listB = listB->next;
+            headB = headB->next;
             i++;
         }
-        while (listA) {
-            if (listA == listB)
-                return listA;
-            listA = listA->next;
-            listB = listB->next;
+        while (headA) {
+            if (headA == headB)
+                return headA;
+            headA = headA->next;
+            headB = headB->next;
         }
         return NULL;
-        
+    }
+    
+    int getLength(ListNode *list) {
+        int i = 0;
+        while (list){
+            list = list->next;
+            i++;
+        }
+        return i;
     }
 ```
 
@@ -419,17 +424,16 @@ Algorithm uses Merge sort
 
 ```C++
 ListNode* middleNode(ListNode* head) {
-        ListNode* bufMiddle = head;
-        ListNode* buf = head;
-        ListNode* nullSetter = head;
         if(head){
-            while (head && head->next) {
+            ListNode* middle = head;
+            while (head->next && head->next->next) {
                 head = head->next->next;
-                nullSetter = bufMiddle;
-                bufMiddle = bufMiddle->next;
+                middle = middle->next;
             }
-            nullSetter->next = NULL;
-            return bufMiddle;
+            head = middle;
+            middle = middle->next;
+            head->next = NULL;
+            return middle;
         }
         return NULL;
     }
