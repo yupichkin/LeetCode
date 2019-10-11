@@ -16,71 +16,67 @@ reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
 
 My algorithm uses reverseList and middleNode functions
 ```C++
- ListNode* middleNode(ListNode* head) {
-     if(head){
-         ListNode* middle = head;
-         while (head->next && head->next->next) {
-             head = head->next->next;
-             middle = middle->next;
+   ListNode* middleNode(ListNode* head) {
+        if(head){
+            ListNode* middle = head;
+            while (head->next && head->next->next) {
+                head = head->next->next;
+                middle = middle->next;
+            }
+            return middle;
+        }
+        return NULL;
+    }
+  ListNode* reverseList(ListNode* head) {
+     if (head){
+         ListNode* after = head->next;
+         ListNode* buf;
+         head->next = NULL;
+         while(after) {
+             buf = after->next;
+             after->next = head;
+             head = after;
+             after = buf;
          }
-         return middle;
-     }
-     return NULL;
- }
- ListNode* reverseList(ListNode* head) {
-   if (head) {
-     ListNode* after = head->next;
-     ListNode* buf = head->next;
-     head->next = NULL;
-
-     while (after) {
-       buf = after->next;
-       after->next = head;
-       head = after;
-       after = buf;
      }
      return head;
-   }
-   return head;
+ }
+  ListNode* splitTwoLists(ListNode* l1, ListNode* l2) {
+    if (l1 && l2) {
+      ListNode* buffer1;
+      ListNode* buffer2;
+      ListNode* head = l1;
+      while (l1->next) {
+        buffer1 = l1->next;
+        buffer2 = l2->next;
+        l1->next = l2;
+        l2->next = buffer1;
+        l1 = buffer1;
+        l2 = buffer2;
+      }
+      if (l2 && l2->next == NULL) {
+        l1->next = l2;
+      }
+      return l1;
+    }
+    else {
+      if (l1)
+        return l1;
+      else
+        return l2;
+    }
 
- }
- ListNode* splitTwoLists(ListNode* l1, ListNode* l2) {
-   ListNode* buffer1 = l1;
-   ListNode* buffer2 = l2;
-   ListNode* buffer3;
-   ListNode* buffer4;
-   if (buffer1 && buffer2) {
-     while (buffer1->next) {
-       buffer3 = buffer1->next;
-       buffer4 = buffer2->next;
-       buffer1->next = buffer2;
-       buffer2->next = buffer3;
-       buffer1 = buffer3;
-       buffer2 = buffer4;
-     }
-     if (buffer2 && buffer2->next == NULL) {
-       buffer1->next = buffer2;
-     }
-     return l1;
-   }
-   else {
-     if (buffer1)
-       return buffer1;
-     else
-       return buffer2;
-   }
-
- }
- void reorderList(ListNode* head) {
-   if (head && head->next) {
-       ListNode* middle = middleNode(head);
-       ListNode* buffer = middle;
-       middle = middle->next;
-       buffer->next = NULL;
-       middle = reverseList(middle);
-       splitTwoLists(head, middle);
-   }
- }
+  }
+  void reorderList(ListNode* head) {
+    if (head && head->next) {
+        ListNode* middle = middleNode(head);
+        ListNode* buffer = middle;
+        middle = middle->next;
+        buffer->next = NULL;
+        middle = reverseList(middle);
+        splitTwoLists(head, middle);
+    }
+  }
 ```
 
 ## Linked List Cycle I
@@ -278,19 +274,19 @@ bool isPalindrome(ListNode* head) {
     return true;
   }
  ListNode* reverseList(ListNode* head) {
-     if (head){
-         ListNode* after = head->next;
-         ListNode* buf = head->next;
-         head->next = NULL;
-         while(after) {
-             buf = after->next;
-             after->next = head;
-             head = after;
-             after = buf;
-         }
-     }
-     return head;
- }
+        if (head){
+            ListNode* after = head->next;
+            ListNode* buf;
+            head->next = NULL;
+            while(after) {
+                buf = after->next;
+                after->next = head;
+                head = after;
+                after = buf;
+            }
+        }
+        return head;
+  }
   ListNode* middleNode(ListNode* head) {
     if (head) {
       ListNode* middle = head;
@@ -310,20 +306,20 @@ Reverse a singly linked list.
 
 itteratively:
 ```C++
-ListNode* reverseList(ListNode* head) {
-     if (head){
-         ListNode* after = head->next;
-         ListNode* buf = head->next;
-         head->next = NULL;
-         while(after) {
-             buf = after->next;
-             after->next = head;
-             head = after;
-             after = buf;
-         }
-     }
-     return head;
- }
+  ListNode* reverseList(ListNode* head) {
+        if (head){
+            ListNode* after = head->next;
+            ListNode* buf;
+            head->next = NULL;
+            while(after) {
+                buf = after->next;
+                after->next = head;
+                head = after;
+                after = buf;
+            }
+        }
+        return head;
+  }
 ```
 recursively: 
 ```C++
