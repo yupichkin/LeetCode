@@ -157,40 +157,40 @@ Merge two sorted linked lists and return it as a new list. The new list should b
 
 ```C++
 
-ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        ListNode* buffer1 = l1;
-        ListNode* buffer2 = l2;
-        ListNode* buffer = l1;
-        ListNode* returningNode;
-        if (buffer1 && buffer2) {
-            if (buffer1->val <= buffer2->val) {
-                 returningNode = buffer1;
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if (l1 && l2) {
+            ListNode* l1Runner = l1; 
+            ListNode* l2Runner = l2;
+            ListNode* buffer = l1;
+            ListNode* returningNode;
+            if (l1Runner->val <= l2Runner->val) {
+                 returningNode = l1Runner;
             }
             else {
-                returningNode = buffer2; //for second while cycle
-                buffer2 = buffer1;
-                buffer1 = returningNode;
+                returningNode = l2Runner; //for second while cycle
+                l2Runner = l1Runner;      //in algorithm l1Runner->val should be greater
+                l1Runner = returningNode;
             }
             do {
-                while (buffer1->next != NULL && buffer1->next->val <= buffer2->val) {
-                        buffer1 = buffer1->next;
+                while (l1Runner->next != NULL && l1Runner->next->val <= l2Runner->val) {
+                        l1Runner = l1Runner->next;
                 }
-                buffer = buffer1->next;
-                buffer1->next = buffer2;
-                buffer1 = buffer2;
-                buffer2 = buffer;
+                buffer = l1Runner->next;
+                l1Runner->next = l2Runner;
+                l1Runner = l2Runner;
+                l2Runner = buffer;
             } while (buffer);
-
+            
             return returningNode;
         }
         else {
-            if (buffer1)
-                return buffer1;
+            if (l1)
+                return l1;
             else
-                return buffer2;
+                return l2;
         }
 
-  }
+    }
 ```
 
 ## Remove Nth Node From End of List
@@ -198,25 +198,24 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
 Given a linked list, remove the n-th node from the end of list and return its head.
 
 ```C++
-ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode* buffer = head;
-        ListNode* removing = head;
-        int i = 0;
+     ListNode* removeNthFromEnd(ListNode* head, int n) {
         if(head->next) {
+            ListNode* buffer = head;
+            ListNode* removing = head;
+            int i = 0;
             while(i < n) {
                 buffer = buffer->next;
                 i++;
             } 
-            if (buffer == NULL) { //for the n == listCount
+            if (!buffer) { //for the n == listCount
                 buffer = head->next;
                 delete(head);
                 return buffer;
             }
-            while (buffer->next && removing->next->next) {
+            while (buffer->next) {
                 removing = removing->next;
                 buffer = buffer->next;
             } 
-
             buffer = removing->next->next;
             delete(removing->next);
             removing->next = buffer;
@@ -225,7 +224,6 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
         else {
             return NULL;
         }
-        
     }
 ```
     
@@ -235,15 +233,14 @@ Given a non-empty, singly linked list with head node head, return a middle node 
 If there are two middle nodes, return the second middle node.
 
 ```C++
-ListNode* middleNode(ListNode* head) {
-        ListNode* bufMiddle = head;
-        ListNode* buf = head;
+    ListNode* middleNode(ListNode* head) {
         if(head){
+            ListNode* middle = head;
             while (head && head->next) {
                 head = head->next->next;
-                bufMiddle = bufMiddle->next;
+                middle = middle->next;
             }
-            return bufMiddle;
+            return middle;
         }
         return NULL;
     }
@@ -254,13 +251,11 @@ ListNode* middleNode(ListNode* head) {
 Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
 
 ```C++
-void deleteNode(ListNode* node) {
-        int buf;
+    void deleteNode(ListNode* node) {
         ListNode* buffer = node->next;
         node->val = node->next->val;
         node->next = node->next->next;
         delete(buffer);
-        
     }
 ```
 
@@ -272,10 +267,10 @@ Given a singly linked list, determine if it is a palindrome.
 bool isPalindrome(ListNode* head) {
     if (head && head->next) {
       ListNode* buffer = middleNode(head);
-      ListNode* middle = buffer->next;
+      ListNode* middle = buffer->next; 
       buffer->next = NULL;
       middle = reverseList(middle);
-      while (middle && head) {
+      while (middle) { // because middle list shorter then cutted head list
         if (middle->val != head->val)
           return false;
         middle = middle->next;
@@ -284,32 +279,28 @@ bool isPalindrome(ListNode* head) {
     }
     return true;
   }
-  ListNode* reverseList(ListNode* head) {
-    if (head) {
-      ListNode* after = head->next;
-      ListNode* buf = head->next;
-      head->next = NULL;
-
-      while (after) {
-        buf = after->next;
-        after->next = head;
-        head = after;
-        after = buf;
-      }
-      return head;
-    }
-    return head;
-
-  }
+ ListNode* reverseList(ListNode* head) {
+     if (head){
+         ListNode* after = head->next;
+         ListNode* buf = head->next;
+         head->next = NULL;
+         while(after) {
+             buf = after->next;
+             after->next = head;
+             head = after;
+             after = buf;
+         }
+     }
+     return head;
+ }
   ListNode* middleNode(ListNode* head) {
-    ListNode* bufMiddle = head;
-    ListNode* buf = head;
     if (head) {
-      while (head->next && head->next->next) {
-        head = head->next->next;
-        bufMiddle = bufMiddle->next;
+      ListNode* middle = head;
+      while (head->next && head->next->next) {//another middleNode function
+        head = head->next->next;             //there head->next->next in 'if' for doing bufMiddle->next 
+        middle = middle->next;               //in isPalindrom for odd and even list count
       }
-      return bufMiddle;
+      return middle;
     }
     return NULL;
   }
@@ -322,22 +313,19 @@ Reverse a singly linked list.
 itteratively:
 ```C++
 ListNode* reverseList(ListNode* head) {
-        if (head){
-            ListNode* after = head->next;
-            ListNode* buf = head->next;
-            head->next = NULL;
-
-            while(after) {
-                buf = after->next;
-                after->next = head;
-                head = after;
-                after = buf;
-            }
-            return head;
-        }
-        return head;
-    
-    }
+     if (head){
+         ListNode* after = head->next;
+         ListNode* buf = head->next;
+         head->next = NULL;
+         while(after) {
+             buf = after->next;
+             after->next = head;
+             head = after;
+             after = buf;
+         }
+     }
+     return head;
+ }
 ```
 recursively: 
 ```C++
@@ -364,37 +352,32 @@ recursively:
 Remove all elements from a linked list of integers that have value val.
 
 ```C++
-ListNode* removeElements(ListNode* head, int val) {
-        ListNode* buffer = head;
-        ListNode* prevBuf = head;
+    ListNode* removeElements(ListNode* head, int val) {
         if (head && head->next){
-            while (prevBuf && prevBuf->val == val) { //miss all first equals
-                prevBuf = prevBuf->next;
-
+            while (head && head->val == val) { //miss all first equals
+                head = head->next;
             }
-            head = prevBuf;
-            if (!prevBuf)
+            if (!head)
                 return NULL;
-            buffer = prevBuf->next;
-            while (buffer && buffer->next) {
-                if (buffer->val == val) {
-                    prevBuf->next = buffer->next;
-                    buffer = buffer->next;
+            ListNode* deleteBuf;
+            ListNode* buffer = head;
+            while (buffer->next) {  //buffer->val cannot be equal to val because we already have missed
+                if (buffer->next->val == val) {
+                    deleteBuf = buffer->next;
+                    buffer->next = buffer->next->next;
+                    delete(deleteBuf);
+                    if (!buffer) //additional conditional for possible null pointer
+                        break;
                 }
                 else{
-                    prevBuf = buffer;
                     buffer = buffer->next;
                 }
-            }
-            if (buffer && buffer->val == val) {
-                prevBuf->next = NULL;
             }
             return head;
         }
         if (head && head->val == val)
             return NULL;
-        else 
-            return head;
+        return head;
     }
 ```
 
@@ -438,7 +421,7 @@ Sort a linked list in O(n log n) time using constant space complexity.
 Algorithm uses Merge sort
 
 ```C++
-ListNode* middleNode(ListNode* head) {
+     ListNode* middleNode(ListNode* head) {
         if(head){
             ListNode* middle = head;
             while (head->next && head->next->next) {
@@ -454,40 +437,39 @@ ListNode* middleNode(ListNode* head) {
     }
     
     ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
-        
-        ListNode* buffer1 = l1;
-        ListNode* buffer2 = l2;
-        ListNode* buffer = l1;
-        ListNode* returningNode;
-        if (buffer1 && buffer2) {
-            if (buffer1->val <= buffer2->val) {
-                 returningNode = buffer1;
+        if (l1 && l2) {
+            ListNode* l1Runner = l1; 
+            ListNode* l2Runner = l2;
+            ListNode* buffer = l1;
+            ListNode* returningNode;
+            if (l1Runner->val <= l2Runner->val) {
+                 returningNode = l1Runner;
             }
             else {
-                returningNode = buffer2; //for second while cycle
-                buffer2 = buffer1;
-                buffer1 = returningNode;
+                returningNode = l2Runner; //for second while cycle
+                l2Runner = l1Runner;      //in algorithm l1Runner->val should be greater
+                l1Runner = returningNode;
             }
             do {
-                while (buffer1->next != NULL && buffer1->next->val <= buffer2->val) {
-                        buffer1 = buffer1->next;
+                while (l1Runner->next != NULL && l1Runner->next->val <= l2Runner->val) {
+                        l1Runner = l1Runner->next;
                 }
-                buffer = buffer1->next;
-                buffer1->next = buffer2;
-                buffer1 = buffer2;
-                buffer2 = buffer;
+                buffer = l1Runner->next;
+                l1Runner->next = l2Runner;
+                l1Runner = l2Runner;
+                l2Runner = buffer;
             } while (buffer);
-
+            
             return returningNode;
         }
         else {
-            if (buffer1)
-                return buffer1;
+            if (l1)
+                return l1;
             else
-                return buffer2;
+                return l2;
         }
 
-  }
+    }
     ListNode* sortList(ListNode* head) {
         if (head && head->next)
             return mergeTwoLists(sortList(head), sortList(middleNode(head)));
