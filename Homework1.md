@@ -84,56 +84,71 @@ ListNode* middleNode(ListNode* head) {
  }
 ```
 
-## Linked List Cycle II
+## Linked List Cycle I
 
-Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+Given a linked list, return true if there is a cycle. If there is no cycle, return false.
 
 ```C++
-ListNode *detectCycle(ListNode *head) {
-    int length;
-    int i;
-    if(hasCycle(head, &length)) {
-        ListNode* buffer = head;
-        ListNode* buffer2 = head->next;
-        do {
-            i = 0;
-            do {
-                if (buffer == buffer2)
-                    return buffer;
-                buffer2 = buffer2->next;
-                i++;
-            } while (i <= length);
-            buffer = buffer->next;
-        }   while (buffer);
-    }
-    return NULL;
-        
-}
-
-bool hasCycle(ListNode *head, int* length) {
-    if (head){
-        ListNode* buffer = head->next;
-        int i = 0;
-        if (head->next) {
+    bool hasCycle(ListNode *head) {
+        if (head && head->next){
+            ListNode* buffer = head->next;
             head = head->next->next; //for the first move
-
             while (head && head->next) {
-                if (buffer == head) {
-                    do {
-                        buffer = buffer->next;
-                        i++;
-                    } while (buffer != head);
-                    
-                    *length = i;
+                if (buffer == head)
                     return true;
-                }
                 buffer = buffer->next;
                 head = head->next->next;
             }
         }
+        return false;
     }
-    return false;
-}
+```
+  
+
+## Linked List Cycle II
+
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+Algorithm explanation: we are starting two nodes, where one of them running throw 1 elements, and second running two times faster(throw 2 elements). When they have meeted each other(cycle detected), we return meeting node. And from original head and meeting node have to be on the same distance from cycling node.
+h - distance from original head to cycling node
+c - distance from cycling node to meeting node
+k = distance from meeting node to cycling node
+l - cycle length
+
+L - distance runned slow node
+L = h + c + l*n; // n and m some natural numbers
+2L = h + c + l*m;
+2*(h+c) + l*n = h + c + l*m;
+h + c = l*(m - n); 
+if h + c should be div by l then if k = l - c
+h = k;
+
+```C++
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* meetingNode;
+        meetingNode = hasCycle(head);
+        if (meetingNode) {
+            while (meetingNode != head) {
+                head = head->next;
+                meetingNode = meetingNode->next;
+            }
+            return head;
+        }
+        return NULL;
+    }
+    
+    ListNode* hasCycle(ListNode *head) {
+        if (head && head->next){
+            ListNode* buffer = head->next;
+            head = head->next->next; //for the first move
+            while (head && head->next) {
+                if (buffer == head)
+                    return buffer;
+                buffer = buffer->next;
+                head = head->next->next;
+            }
+        }
+        return NULL;
+    }
 ```
   
 ## Merge Two Sorted Lists
