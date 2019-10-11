@@ -109,18 +109,18 @@ Given a linked list, return true if there is a cycle. If there is no cycle, retu
 
 Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 Algorithm explanation: we are starting two nodes, where one of them running throw 1 elements, and second running two times faster(throw 2 elements). When they have meeted each other(cycle detected), we return meeting node. And from original head and meeting node have to be on the same distance from cycling node.
-h - distance from original head to cycling node
-c - distance from cycling node to meeting node
-k = distance from meeting node to cycling node
-l - cycle length
+h - distance from original head to cycling node   
+c - distance from cycling node to meeting node    
+k = distance from meeting node to cycling node    
+l - cycle length    
 
-L - distance runned slow node
-L = h + c + l*n; // n and m some natural numbers
-2L = h + c + l*m;
-2*(h+c) + l*n = h + c + l*m;
-h + c = l*(m - n); 
-if h + c should be div by l then if k = l - c
-h = k;
+L - distance runned slow node      
+L = h + c + l*n; // n and m some natural numbers  
+2L = h + c + l*m;   
+2*(h+c) + l*n = h + c + l*m;  
+h + c = l*(m - n);       
+if h + c should be div by l then if k = l - c     
+h = k;    
 
 ```C++
     ListNode *detectCycle(ListNode *head) {
