@@ -16,17 +16,16 @@ reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
 
 My algorithm uses reverseList and middleNode functions
 ```C++
-ListNode* middleNode(ListNode* head) {
-   ListNode* bufMiddle = head;
-   ListNode* buf = head;
-   if (head) {
-     while (head->next && head->next->next) {
-       head = head->next->next;
-       bufMiddle = bufMiddle->next;
+ ListNode* middleNode(ListNode* head) {
+     if(head){
+         ListNode* middle = head;
+         while (head->next && head->next->next) {
+             head = head->next->next;
+             middle = middle->next;
+         }
+         return middle;
      }
-     return bufMiddle;
-   }
-   return NULL;
+     return NULL;
  }
  ListNode* reverseList(ListNode* head) {
    if (head) {
@@ -189,7 +188,6 @@ Merge two sorted linked lists and return it as a new list. The new list should b
             else
                 return l2;
         }
-
     }
 ```
 
