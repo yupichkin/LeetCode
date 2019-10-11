@@ -379,6 +379,7 @@ Remove all elements from a linked list of integers that have value val.
 
 Given a linked list, remove the n-th node from the end of list and return its head.
 
+With counting list lengths:
 ```C++
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         int i = getLength(headA) - getLength(headB);
@@ -408,7 +409,27 @@ Given a linked list, remove the n-th node from the end of list and return its he
         return i;
     }
 ```
-
+Without counting list lengths, but a lonk while:
+```C++
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA && headB){
+            ListNode* runnerA = headA;
+            ListNode* runnerB = headB;
+            while (runnerA != runnerB) {
+                if (runnerA)
+                    runnerA = runnerA->next;
+                else
+                    runnerA = headA;
+                if (runnerB)
+                    runnerB = runnerB->next;
+                else
+                    runnerB = headB;
+            }
+            return runnerA;
+        }
+        return NULL;
+    }
+```
 ##  Sort List
 
 Sort a linked list in O(n log n) time using constant space complexity.
