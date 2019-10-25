@@ -186,7 +186,29 @@ Merge two sorted linked lists and return it as a new list. The new list should b
         }
     }
 ```
-
+Shorter code:
+```
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode head(0);
+        ListNode* switcher = &head;
+        while(l1 && l2) {
+            if (l1->val < l2->val){
+                switcher->next = l1;
+                l1 = l1->next;
+            }
+            else {
+                switcher->next = l2;
+                l2 = l2->next;
+            }
+            switcher = switcher->next;
+        }
+        if (l1)
+            switcher->next = l1;
+        if (l2)
+            switcher->next = l2;
+        return head.next;
+    }
+```
 ## Remove Nth Node From End of List
 
 Given a linked list, remove the n-th node from the end of list and return its head.
