@@ -47,15 +47,9 @@ public:
     }
 private:
     bool isSpecular(TreeNode* tree1, TreeNode* tree2) {
-        if (tree1 && tree2) {
-            if (tree1->val == tree2->val && isSpecular(tree1->left, tree2->right) && isSpecular(tree1->right, tree2->left))
-                return true;
-            return false;
-
-        }
-        if (tree1 == tree2) //that mean "nulls" must be at the same level of tree
-            return true;
-        return false;
+        if (tree1 && tree2) 
+            return (tree1->val == tree2->val && isSpecular(tree1->left, tree2->right) && isSpecular(tree1->right, tree2->left));
+        return tree1 == tree2; //that mean "nulls" must be at the same level of tree
     }
 };
  ```
@@ -110,16 +104,12 @@ https://leetcode.com/problems/invert-binary-tree/
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-        swapChildrens(root);
-        return root;
-    }
-    void swapChildrens(TreeNode* root){
         if (root) {
             swap(root->left, root->right);
-            swapChildrens(root->left);
-            swapChildrens(root->right);
+            invertTree(root->left);
+            invertTree(root->right);
         }
-        return;
+        return root;
     }
 };
  ```
