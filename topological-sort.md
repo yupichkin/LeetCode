@@ -103,3 +103,62 @@ public:
         return true;
     }
  ```
+ 
+ # Alien Dictionary
+
+https://www.lintcode.com/problem/alien-dictionary/description
+```C++ 
+class Solution {
+ private:
+  vector<int> alphabet;
+  int colors[26] = {0};
+  bool meetedWord[26] = {};
+
+ public:
+  string alienOrder(vector<string> &words) {
+    string alienAlphabet;
+    int j;
+    vector<vector<int>> graph(26);
+    for (auto word : words)
+      for (auto letter : word) meetedWord[letter - 'a'] = true;
+
+    for (int i = 0; i < words.size() - 1; i++) {
+      j = 0;
+      while (j < min(words[i].length(), words[i + 1].length()) &&
+             words[i][j] == words[i + 1][j])
+        j++;
+      graph[words[i + 1][j] - 'a'].push_back(words[i][j] - 'a');
+    }
+    for (int i = 0; i < 26; i++) {
+      if (meetedWord[i]) {
+        if (!checkLetter(i, graph)) return {};
+      }
+    }
+    alienAlphabet.resize(alphabet.size());
+    for (int i = 0; i < alphabet.size(); i++) {
+      alienAlphabet[i] = 'a' + (char)alphabet[i];
+    }
+    return alienAlphabet;
+  }
+  bool checkLetter(int letter, vector<vector<int>> graph) {
+    if (colors[letter] == 2)  // point is black
+      return true;
+    if (colors[letter] == 1)  // point is gray
+      return false;
+    colors[letter] = 1;  // point was white and now gray
+    if (checkNeighbours(letter, graph)) {
+      colors[letter] = 2;
+      alphabet.push_back(letter);
+      return true;
+    }
+    return false;
+  }
+  bool checkNeighbours(int letter, vector<vector<int>> graph) {
+    for (int i = 0; i != graph[letter].size(); i++) {
+      if (!checkLetter(graph[letter][i], graph)) return false;
+    }
+    return true;
+  }
+};
+ 
+ ```
