@@ -219,3 +219,20 @@ public:
     }
 };
  ```
+ 
+ #   Lowest Common Ancestor of a Binary Tree
+ 
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+```C++ 
+class Solution {
+ public:
+  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if (!root) return NULL;
+    if (root == p || root == q) return root;
+    TreeNode* ancestorLeft = lowestCommonAncestor(root->left, p, q);
+    TreeNode* ancestorRight = lowestCommonAncestor(root->right, p, q);
+    if (ancestorLeft && ancestorRight) return root;
+    return ancestorLeft ? ancestorLeft : ancestorRight;
+  }
+};
+ ```
