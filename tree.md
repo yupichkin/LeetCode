@@ -236,3 +236,24 @@ class Solution {
   }
 };
  ```
+ 
+  #   Lowest Common Ancestor of a Binary Search Tree
+ 
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+```C++ 
+class Solution {
+ public:
+  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if (p->val > q->val) swap(p, q);
+    return findLowestAncestor(root, p, q);
+  }
+  TreeNode* findLowestAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+    if ((p->val < root->val && root->val < q->val) || root == p || root == q)
+      return root;
+    if (q->val < root->val) return findLowestAncestor(root->left, p, q);
+    if (p->val > root->val) return findLowestAncestor(root->right, p, q);
+    return NULL;
+  }
+};
+};
+ ```
