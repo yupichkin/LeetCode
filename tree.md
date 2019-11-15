@@ -257,3 +257,35 @@ class Solution {
 };
 };
  ```
+ 
+   #   Validate Binary Search Tree
+ 
+https://leetcode.com/problems/validate-binary-search-tree/
+```C++ 
+class Solution {
+  vector<int> stack;
+  vector<int> direction;  // 0 - left, 1 - right
+ public:
+  bool isValidBST(TreeNode* root) {
+    if (!root) return true;
+    for (int i = 0; i < stack.size(); i++) {
+      if (direction[i]) {  // right
+        if (root->val <= stack[i]) return false;
+      } else {  // left
+        if (root->val >= stack[i]) return false;
+      }
+    }
+    stack.push_back(root->val);
+    direction.push_back(1);
+    if (!isValidBST(root->right)) return false;
+    direction.pop_back();
+
+    direction.push_back(0);
+    if (!isValidBST(root->left)) return false;
+    direction.pop_back();
+    stack.pop_back();
+
+    return true;
+  }
+};
+ ```
