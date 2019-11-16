@@ -289,3 +289,38 @@ class Solution {
   }
 };
  ```
+ 
+ 
+   #   Binary Search Tree Iterator
+ 
+https://leetcode.com/problems/binary-search-tree-iterator/
+```C++ 
+class BSTIterator {
+  vector<int> iteratorArray;
+  int position;
+
+ public:
+  BSTIterator(TreeNode* root) {
+    InOrderTraversal(root);
+    position = -1;
+  }
+
+  /** @return the next smallest number */
+  int next() {
+    position++;
+    return iteratorArray[position];
+  }
+
+  /** @return whether we have a next smallest number */
+  bool hasNext() { return position + 1 < iteratorArray.size(); }
+
+ private:
+  void InOrderTraversal(TreeNode* root) {
+    if (!root) return;
+    InOrderTraversal(root->left);
+    iteratorArray.push_back(root->val);
+    InOrderTraversal(root->right);
+  }
+};
+
+ ```
