@@ -31,19 +31,11 @@ private:
         if (colors[numCourse] == 1) //point is gray
             return false;
         colors[numCourse] = 1; //point was white and now gray
-        if (checkNeighbours(numCourse, graf, colors)) { 
-            colors[numCourse] = 2;
-             return true;
-        }
-        return false;
-    }
-    bool checkNeighbours(int numCourse, vector<vector<int>>& graf, int* colors) {
-        int i = 0;
-        while (i < graf[numCourse].size()) {
-            if (!checkCourse(graf[numCourse][i], graf, colors))
+        for(auto prevCourse: graf[numCourse]) {
+            if (!checkCourse(prevCourse, graf, colors))
                 return false;
-            i++;
         }
+        colors[numCourse] = 2;
         return true;
     }
  ```
@@ -86,20 +78,12 @@ public:
         if (colors[numCourse] == 1) //point is gray
             return false;
         colors[numCourse] = 1; //point was white and now gray
-        if (checkNeighbours(numCourse, graf, colors)) {
-            colors[numCourse] = 2;
-            path.push_back(numCourse);
-            return true;
-        }
-        return false;
-    }
-    bool checkNeighbours(int numCourse, vector<vector<int>>& graf, int* colors) {
-        int i = 0;
-        while (i < graf[numCourse].size()) {
-            if (!checkCourse(graf[numCourse][i], graf, colors))
+        for(auto prevCourse: graf[numCourse]) {
+            if (!checkCourse(prevCourse, graf, colors))
                 return false;
-            i++;
         }
+        colors[numCourse] = 2;
+        path.push_back(numCourse);
         return true;
     }
  ```
