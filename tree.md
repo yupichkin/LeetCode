@@ -17,20 +17,20 @@ struct TreeNode {
 https://leetcode.com/problems/binary-tree-inorder-traversal/
 ```C++ 
 class Solution {
-private:
-    vector<int> array;
-public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        InOrder(root);
-        return array;
-    }
-    void InOrder(TreeNode* root) {
-        if (!root)
-            return;
-        InOrder(root->left);
-        array.push_back(root->val);
-        InOrder(root->right);
-    }
+ private:
+  vector<int> array;
+
+ public:
+  vector<int> inorderTraversal(TreeNode* root) {
+    InOrder(root);
+    return array;
+  }
+  void InOrder(TreeNode* root) {
+    if (!root) return;
+    InOrder(root->left);
+    array.push_back(root->val);
+    InOrder(root->right);
+  }
 };
  ```
  
@@ -39,18 +39,21 @@ public:
 https://leetcode.com/problems/symmetric-tree/
 ```C++ 
 class Solution {
-public:
-    bool isSymmetric(TreeNode* root) {
-        if(root)
-            return isSpecular(root->left, root->right);
-        return true;
-    }
-private:
-    bool isSpecular(TreeNode* tree1, TreeNode* tree2) {
-        if (tree1 && tree2) 
-            return (tree1->val == tree2->val && isSpecular(tree1->left, tree2->right) && isSpecular(tree1->right, tree2->left));
-        return tree1 == tree2; //that mean "nulls" must be at the same level of tree
-    }
+ public:
+  bool isSymmetric(TreeNode* root) {
+    if (root) return isSpecular(root->left, root->right);
+    return true;
+  }
+
+ private:
+  bool isSpecular(TreeNode* tree1, TreeNode* tree2) {
+    if (tree1 && tree2)
+      return (tree1->val == tree2->val &&
+              isSpecular(tree1->left, tree2->right) &&
+              isSpecular(tree1->right, tree2->left));
+    return tree1 ==
+           tree2;  // that mean "nulls" must be at the same level of tree
+  }
 };
  ```
  
@@ -59,24 +62,21 @@ private:
 https://leetcode.com/problems/maximum-depth-of-binary-tree/
 ```C++ 
 class Solution {
-public:
-    int maxDepth(TreeNode* root) {
-        if(!root)
-            return 0;
-        return maxDepth(root->left, root->right, 1);
+ public:
+  int maxDepth(TreeNode* root) {
+    if (!root) return 0;
+    return maxDepth(root->left, root->right, 1);
+  }
+  int maxDepth(TreeNode* tree1, TreeNode* tree2, int depth) {
+    if (tree1 && tree2) {
+      int depth1 = maxDepth(tree1->left, tree1->right, depth + 1);
+      int depth2 = maxDepth(tree2->left, tree2->right, depth + 1);
+      return depth1 > depth2 ? depth1 : depth2;
     }
-    int maxDepth(TreeNode* tree1, TreeNode* tree2, int depth) {
-        if (tree1 && tree2) {
-            int depth1 = maxDepth(tree1->left, tree1->right, depth + 1);
-            int depth2 = maxDepth(tree2->left, tree2->right, depth + 1);
-            return depth1 > depth2 ? depth1 : depth2;
-        }
-        if(tree1)
-            return maxDepth(tree1->left, tree1->right, depth + 1);
-        if(tree2)
-            return maxDepth(tree2->left, tree2->right, depth + 1);
-        return depth;
-    }
+    if (tree1) return maxDepth(tree1->left, tree1->right, depth + 1);
+    if (tree2) return maxDepth(tree2->left, tree2->right, depth + 1);
+    return depth;
+  }
 };
  ```
  
@@ -85,15 +85,14 @@ public:
 https://leetcode.com/problems/same-tree/
 ```C++ 
 class Solution {
-public:
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-        if (!p && !q)
-            return true;
-        if ((p && q) && (p->val == q->val)) {
-            return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
-        }
-        return false;
+ public:
+  bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (!p && !q) return true;
+    if ((p && q) && (p->val == q->val)) {
+      return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
+    return false;
+  }
 };
  ```
  
@@ -102,15 +101,15 @@ public:
 https://leetcode.com/problems/invert-binary-tree/
 ```C++ 
 class Solution {
-public:
-    TreeNode* invertTree(TreeNode* root) {
-        if (root) {
-            swap(root->left, root->right);
-            invertTree(root->left);
-            invertTree(root->right);
-        }
-        return root;
+ public:
+  TreeNode* invertTree(TreeNode* root) {
+    if (root) {
+      swap(root->left, root->right);
+      invertTree(root->left);
+      invertTree(root->right);
     }
+    return root;
+  }
 };
  ```
  
@@ -119,14 +118,13 @@ public:
 https://leetcode.com/problems/path-sum/
 ```C++ 
 class Solution {
-public:
-    bool hasPathSum(TreeNode* root, int sum) {
-        if (!root)
-            return false;
-        if (!root->left && !root->right)
-            return sum == root->val;
-        return hasPathSum(root->left, sum - root->val) || hasPathSum(root->right, sum - root->val);
-    }
+ public:
+  bool hasPathSum(TreeNode* root, int sum) {
+    if (!root) return false;
+    if (!root->left && !root->right) return sum == root->val;
+    return hasPathSum(root->left, sum - root->val) ||
+           hasPathSum(root->right, sum - root->val);
+  }
 };
  ```
  
@@ -135,27 +133,25 @@ public:
 https://leetcode.com/problems/binary-tree-level-order-traversal/
 ```C++ 
 class Solution {
-private:
-vector<vector<int>> levels;
+ private:
+  vector<vector<int>> levels;
 
-public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        levels.push_back({});
-        writeLevel(root, 0);
-        levels.pop_back();
-        return levels;
+ public:
+  vector<vector<int>> levelOrder(TreeNode* root) {
+    levels.push_back({});
+    writeLevel(root, 0);
+    levels.pop_back();
+    return levels;
+  }
+  void writeLevel(TreeNode* root, int level) {
+    if (root) {
+      if (levels[level].empty()) levels.push_back({});
+      levels[level].push_back(root->val);
+      writeLevel(root->left, level + 1);
+      writeLevel(root->right, level + 1);
     }
-    void writeLevel(TreeNode* root, int level) {
-        if (root) {
-            if (levels[level].empty())
-                levels.push_back({});
-            levels[level].push_back(root->val);
-            writeLevel(root->left, level + 1);
-            writeLevel(root->right, level + 1);
-        }
-        return;
-        
-    }
+    return;
+  }
 };
  ```
  
@@ -164,36 +160,34 @@ public:
 https://leetcode.com/problems/subtree-of-another-tree/
 ```C++ 
 class Solution {
-private:
-    vector<TreeNode*> subTrees;
-    int peekVal;
-public:
-    bool isSubtree(TreeNode* s, TreeNode* t) {
-        peekVal = t->val;
-        findElements(s);
-        for(int i = 0; i < subTrees.size(); i++) {
-            if (isSameTree(t, subTrees[i]))
-                return true;
-        }
-        return false;
+ private:
+  vector<TreeNode*> subTrees;
+  int peekVal;
+
+ public:
+  bool isSubtree(TreeNode* s, TreeNode* t) {
+    peekVal = t->val;
+    findElements(s);
+    for (int i = 0; i < subTrees.size(); i++) {
+      if (isSameTree(t, subTrees[i])) return true;
     }
-    void findElements(TreeNode* s) {
-        if (s) {
-            if(s->val == peekVal)
-                subTrees.push_back(s);
-            findElements(s->left);
-            findElements(s->right);
-        }
-        return;
+    return false;
+  }
+  void findElements(TreeNode* s) {
+    if (s) {
+      if (s->val == peekVal) subTrees.push_back(s);
+      findElements(s->left);
+      findElements(s->right);
     }
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-        if (!p && !q)
-            return true;
-        if ((p && q) && (p->val == q->val)) {
-            return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
-        }
-        return false;
+    return;
+  }
+  bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (!p && !q) return true;
+    if ((p && q) && (p->val == q->val)) {
+      return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
+    return false;
+  }
 };
  ```
  
@@ -202,21 +196,22 @@ public:
 https://leetcode.com/problems/kth-smallest-element-in-a-bst/
 ```C++ 
 class Solution {
-private:
-    vector<int> treeArray;
-public:
-    int kthSmallest(TreeNode* root, int k) {
-        fillArray(root);
-        return treeArray[k-1];
+ private:
+  vector<int> treeArray;
+
+ public:
+  int kthSmallest(TreeNode* root, int k) {
+    fillArray(root);
+    return treeArray[k - 1];
+  }
+  void fillArray(TreeNode* root) {
+    if (root) {
+      fillArray(root->left);
+      treeArray.push_back(root->val);
+      fillArray(root->right);
     }
-    void fillArray(TreeNode* root) {
-        if (root) {
-            fillArray(root->left);
-            treeArray.push_back(root->val);
-            fillArray(root->right);
-        }
-        return;
-    }
+    return;
+  }
 };
  ```
  
@@ -257,7 +252,35 @@ class Solution {
 };
 };
  ```
+  #    Inorder Successor in BST
  
+https://www.lintcode.com/problem/inorder-successor-in-bst/description
+```C++ 
+class Solution {
+ public:
+  vector<TreeNode*> inOrderWay;
+  /*
+   * @param root: The root of the BST.
+   * @param p: You need find the successor node of p.
+   * @return: Successor of p.
+   */
+  TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+    if (!root) return NULL;
+    InOrder(root);
+    if (p == inOrderWay.back()) return NULL;
+    vector<TreeNode*>::iterator it =
+        find(inOrderWay.begin(), inOrderWay.end(), p);
+    return *(++it);
+    // write your code here
+  }
+  void InOrder(TreeNode* root) {
+    if (!root) return;
+    InOrder(root->left);
+    inOrderWay.push_back(root);
+    InOrder(root->right);
+  }
+};
+ ```
    #   Validate Binary Search Tree
  
 https://leetcode.com/problems/validate-binary-search-tree/
