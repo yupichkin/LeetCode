@@ -62,21 +62,11 @@ class Solution {
 https://leetcode.com/problems/maximum-depth-of-binary-tree/
 ```C++ 
 class Solution {
- public:
-  int maxDepth(TreeNode* root) {
-    if (!root) return 0;
-    return maxDepth(root->left, root->right, 1);
-  }
-  int maxDepth(TreeNode* tree1, TreeNode* tree2, int depth) {
-    if (tree1 && tree2) {
-      int depth1 = maxDepth(tree1->left, tree1->right, depth + 1);
-      int depth2 = maxDepth(tree2->left, tree2->right, depth + 1);
-      return depth1 > depth2 ? depth1 : depth2;
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root) return 0;
+        return max(maxDepth(root->left), maxDepth(root->right)) + 1;
     }
-    if (tree1) return maxDepth(tree1->left, tree1->right, depth + 1);
-    if (tree2) return maxDepth(tree2->left, tree2->right, depth + 1);
-    return depth;
-  }
 };
  ```
  
