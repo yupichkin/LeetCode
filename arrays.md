@@ -98,25 +98,21 @@ public:
 https://leetcode.com/problems/subarray-sum-equals-k/
 ```C++ 
 class Solution {
-public:
-    int subarraySum(vector<int>& nums, int k) {
-        int sum;
-        int i = 0;
-        int j = 0;
-        int size = nums.size();
-        int count = 0;
-        while (j < size) {
-            i = j;
-            sum = 0;
-            while (i < size) {
-                sum += nums[i];
-                if (sum == k)
-                    count++;
-                i++;
-            }
-            j++;
-        }
-        return count;
+ public:
+  int subarraySum(vector<int>& nums, int k) {
+    int sum = 0;
+    int count = 0;
+    unordered_map<int, int> map;
+    map[0] = 1;
+    for (int i = 0; i < nums.size(); i++) {
+      sum += nums[i];
+      auto it = map.find(sum - k);
+      if (it != map.end()) {
+        count += it->second;
+      }
+      map[sum]++;
     }
+    return count;
+  }
 };
  ```
