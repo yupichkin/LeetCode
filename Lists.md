@@ -95,7 +95,7 @@ My algorithm uses reverseList and middleNode functions
   }
 ```
 
-## Linked List Cycle I
+## Linked List Cycle
 
 Given a linked list, return true if there is a cycle. If there is no cycle, return false.
 
