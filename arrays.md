@@ -1,3 +1,11 @@
+# Tasks with arrays
++ [Two Sum](#two-sum)
++ [3Sum](#3sum)
++ [Subarray Sum Equals K](#subarray-sum-equals-k)
++ [Maximum Subarray](#maximum-subarray)
++ [Maximum Product Subarray](#maximum-product-subarray)
+
+
 # Two Sum
 
 https://leetcode.com/problems/two-sum/
