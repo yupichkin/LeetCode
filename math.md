@@ -1,3 +1,9 @@
+# Mathematics
++ [Fibonacci Number](#fibonacci-number)
+  + [Recursive](#recursive)
+  + [Recursive with memorization](#recursive-with-memorization)
+  + [Iterative](#iterative)
+
 # Fibonachi numbers
 
 3 different algorithm for finding Fibonachi numbers
