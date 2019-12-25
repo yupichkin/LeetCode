@@ -1,3 +1,9 @@
+# Topological-sort
+
++ [Course Schedule](#course-schedule)
++ [Course Schedule II](#course-schedule-ii)
++ [Alien Dictionary](#alien-dictionary)
+
 # Course Schedule
 https://leetcode.com/problems/course-schedule/
 
