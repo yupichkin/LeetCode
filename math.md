@@ -1,5 +1,5 @@
 # Mathematics
-+ [Fibonacci Number](#fibonacci-number)
++ [Fibonachi numbers](#fibonacci-number)
   + [Recursively](#recursive)
   + [Recursively, but with using memory](#recursive-with-memorization)
   + [Iteratively](#iterative)
