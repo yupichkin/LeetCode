@@ -1,3 +1,9 @@
+# Tasks with intervals
+
++ [Non-overlapping Intervals](#non-overlapping-intervals)
++ [Merge Intervals](#merge-intervals)
++ [Insert Interval](#insert-interval)
+
 # Insert Interval
 
 https://leetcode.com/problems/insert-interval/
