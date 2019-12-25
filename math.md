@@ -4,11 +4,11 @@
   + [Recursively, but with using memory](#recursively, but with using memory)
   + [Iteratively](#iteratively)
 
-# Fibonachi numbers
+## Fibonachi numbers
 
 3 different algorithm for finding Fibonachi numbers
 
-1) Recursively
+# Recursively
 ```C++ 
   int fib(int N) {
         if (N < 2)
@@ -18,7 +18,7 @@
    }
  ```
  
- 2) Recursively, but with using memory
+# Recursively, but with using memory
  ```C++ 
  int fib(int N) {
         if (N < 2)
@@ -38,7 +38,7 @@
     }
 ```
 
-3) Itteratively
+# Itteratively
 ```C++ 
   int fib(int N) {
        if(N < 2)
