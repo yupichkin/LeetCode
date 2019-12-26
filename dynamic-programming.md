@@ -3,7 +3,7 @@
 + [Knapsack problem](#knapsack-problem)
 + [Climbing Stairs](#climbing-stairs)
 + [Coin Change](#coin-change)
-+ [Knapsack problem](#knapsack-problem)
++ [Coin Change II](#coin-change-2)
 + [Knapsack problem](#knapsack-problem)
 + [Knapsack problem](#knapsack-problem)
 + [Knapsack problem](#knapsack-problem)
@@ -58,5 +58,20 @@ https://leetcode.com/problems/coin-change/
           }
         }
         return dp[amount] > amount ? -1 : dp[amount];
+    }
+ ```
+ 
+## Coin Change II
+https://leetcode.com/problems/coin-change-2/
+```C++ 
+    int change(int amount, vector<int>& coins) {
+        vector<int> waysCount(amount + 1, 0);
+        waysCount[0] = 1;
+        for (int i = 0; i < coins.size(); i++) {
+          for (int j = coins[i]; j <= amount; j++) {
+              waysCount[j] += waysCount[j - coins[i]];
+          }
+        }
+        return waysCount[amount];
     }
  ```
