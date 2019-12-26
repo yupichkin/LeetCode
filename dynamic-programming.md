@@ -3,7 +3,7 @@
 + [Knapsack problem](#knapsack-problem)
 + [Climbing Stairs](#climbing-stairs)
 + [Coin Change](#coin-change)
-+ [Coin Change II](#coin-change-2)
++ [Coin Change II](#coin-change-ii)
 + [Knapsack problem](#knapsack-problem)
 + [Knapsack problem](#knapsack-problem)
 + [Knapsack problem](#knapsack-problem)
